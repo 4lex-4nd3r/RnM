@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ListViewController : UIViewController {
    
@@ -15,20 +16,17 @@ class ListViewController : UIViewController {
       let imageView = UIImageView()
       imageView.image = UIImage(named: "back")
       imageView.contentMode = .scaleAspectFit
-      imageView.translatesAutoresizingMaskIntoConstraints = false
       return imageView
    }()
    
    private let tableView: UITableView = {
       let tv = UITableView()
       tv.isHidden = true
-      tv.translatesAutoresizingMaskIntoConstraints = false
       return tv
    }()
    
    private let activity: UIActivityIndicatorView = {
       let act = UIActivityIndicatorView()
-      act.translatesAutoresizingMaskIntoConstraints = false
       act.startAnimating()
       return act
    }()
@@ -93,24 +91,18 @@ class ListViewController : UIViewController {
    
    private func setConstraints() {
       
-      NSLayoutConstraint.activate([
-         activity.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-         activity.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100)
-      ])
+      activity.snp.makeConstraints { make in
+         make.centerY.centerX.equalToSuperview()
+      }
+
+      backImageView.snp.makeConstraints { make in
+         make.left.right.top.bottom.equalToSuperview()
+      }
       
-      NSLayoutConstraint.activate([
-         backImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-         backImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-         backImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-         backImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-      ])
-      
-      NSLayoutConstraint.activate([
-         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-      ])
+      tableView.snp.makeConstraints { make in
+         make.left.right.bottom.equalToSuperview()
+         make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+      }
    }
 }
 

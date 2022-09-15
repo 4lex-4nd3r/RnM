@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import SnapKit
 
 class ListTableViewCell: UITableViewCell {
 
@@ -16,25 +17,21 @@ class ListTableViewCell: UITableViewCell {
       let imageView = UIImageView()
       imageView.layer.cornerRadius = 10
       imageView.clipsToBounds = true
-      imageView.translatesAutoresizingMaskIntoConstraints = false
       return imageView
    }()
    
    private let nameLabel: UILabel = {
       let label = UILabel()
       label.adjustsFontSizeToFitWidth = true
-      label.translatesAutoresizingMaskIntoConstraints = false
       return label
    }()
    private let statusLabel: UILabel = {
       let label = UILabel()
-      label.translatesAutoresizingMaskIntoConstraints = false
       return label
    }()
 
    private let genderLabel: UILabel = {
       let label = UILabel()
-      label.translatesAutoresizingMaskIntoConstraints = false
       return label
    }()
 
@@ -72,7 +69,6 @@ class ListTableViewCell: UITableViewCell {
                                                    genderLabel])
       labelsStack.axis = .vertical
       labelsStack.distribution = .equalSpacing
-      labelsStack.translatesAutoresizingMaskIntoConstraints = false
       addSubview(labelsStack)
    }
    
@@ -80,19 +76,17 @@ class ListTableViewCell: UITableViewCell {
    
    private func setConstraints() {
       
-      NSLayoutConstraint.activate([
-         personImageView.widthAnchor.constraint(equalToConstant: 100),
-         personImageView.heightAnchor.constraint(equalToConstant: 100),
-         personImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-         personImageView.centerYAnchor.constraint(equalTo: centerYAnchor)
-      ])
+      personImageView.snp.makeConstraints { make in
+         make.width.height.equalTo(100)
+         make.left.equalToSuperview().inset(20)
+         make.centerY.equalToSuperview()
+      }
       
-      NSLayoutConstraint.activate([
-         labelsStack.leadingAnchor.constraint(equalTo: personImageView.trailingAnchor, constant: 30),
-         labelsStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-         labelsStack.topAnchor.constraint(equalTo: topAnchor, constant: 15),
-         labelsStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15)
-      ])
+      labelsStack.snp.makeConstraints { make in
+         make.top.bottom.equalToSuperview().inset(15)
+         make.left.equalTo(personImageView.snp.right).inset(-30)
+         make.right.equalToSuperview().inset(30)
+      }
    }
 }
 

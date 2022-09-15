@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class LoginViewController : UIViewController {
    
@@ -21,35 +22,28 @@ class LoginViewController : UIViewController {
       tf.autocorrectionType = .no
       tf.autocapitalizationType = .none
       tf.clearButtonMode = .always
-      
       tf.layer.masksToBounds = true
       tf.layer.cornerRadius = 10
       tf.borderStyle = .none
-      
       tf.returnKeyType = .next
-      tf.translatesAutoresizingMaskIntoConstraints = false
       return tf
    }()
    
    private let passwordTextField: UITextField = {
       let tf = UITextField()
       tf.text = "12345"
-      
       tf.backgroundColor = .systemGray6
       tf.font = UIFont.systemFont(ofSize: 18)
       tf.placeholder = "введите пароль"
       tf.textAlignment = .center
-      
       tf.autocorrectionType = .no
       tf.autocapitalizationType = .none
       tf.clearButtonMode = .always
       tf.layer.masksToBounds = true
       tf.layer.cornerRadius = 10
       tf.borderStyle = .none
-      
       tf.borderStyle = .none
       tf.returnKeyType = .done
-      tf.translatesAutoresizingMaskIntoConstraints = false
       return tf
    }()
    
@@ -64,7 +58,6 @@ class LoginViewController : UIViewController {
       button.layer.shadowOpacity = 0.2
       button.layer.shadowOffset = CGSize(width: 0, height: 4)
       button.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
-      button.translatesAutoresizingMaskIntoConstraints = false
       return button
    }()
    
@@ -102,8 +95,6 @@ class LoginViewController : UIViewController {
       loginStack.axis = .vertical
       loginStack.spacing = 20
       loginStack.distribution = .fillEqually
-      loginStack.translatesAutoresizingMaskIntoConstraints = false
-      
       view.addSubview(loginStack)
    }
    
@@ -143,18 +134,16 @@ class LoginViewController : UIViewController {
    
    private func setConstraints() {
       
-      NSLayoutConstraint.activate([
-         logoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-         logoImageView.heightAnchor.constraint(equalToConstant: 60),
-         logoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-         logoImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
-      ])
+      logoImageView.snp.makeConstraints { make in
+         make.centerY.equalToSuperview()
+         make.left.right.equalToSuperview().inset(40)
+         make.height.equalTo(60)
+      }
       
-      NSLayoutConstraint.activate([
-         loginStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-         loginStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-         loginStack.bottomAnchor.constraint(equalTo: logoImageView.topAnchor, constant: -40),
-      ])
+      loginStack.snp.makeConstraints { make in
+         make.left.right.equalToSuperview().inset(40)
+         make.bottom.equalTo(logoImageView.snp_topMargin).inset(-40)
+      }
    }
 }
 

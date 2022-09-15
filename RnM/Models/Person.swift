@@ -16,10 +16,9 @@ struct Persons: Decodable {
 // MARK: - Person
 
 struct Person: Codable {
-   let id: Int
    let name: String
-   let status: String
-   let gender: String
+   let status: Status
+   let gender: Gender
    let image: String
    let episode: [String]
 }

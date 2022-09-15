@@ -26,15 +26,15 @@ class ListTableViewCellViewModel: ListTableViewCellViewModelProtocol {
    }
    
    var name: String {
-      return person.name + " \(person.id)"
+      return person.name
    }
    
    var status: String {
-      "Is " + person.status
+      "Is " + person.status.rawValue
    }
    
    var gender: String {
-      person.gender
+      person.gender.rawValue
    }
    
    var imageURL: String {

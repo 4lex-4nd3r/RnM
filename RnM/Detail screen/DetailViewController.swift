@@ -5,9 +5,8 @@
 //  Created by Александр on 14.09.2022.
 //
 
-import Foundation
-
 import UIKit
+import SnapKit
 
 class DetailViewController : UIViewController {
    
@@ -17,7 +16,6 @@ class DetailViewController : UIViewController {
       let imageView = UIImageView()
       imageView.layer.cornerRadius = 20
       imageView.clipsToBounds = true
-      imageView.translatesAutoresizingMaskIntoConstraints = false
       return imageView
    }()
    
@@ -25,7 +23,6 @@ class DetailViewController : UIViewController {
       let label = UILabel()
       label.text = "present in episodes"
       label.font = .systemFont(ofSize: 25, weight: .bold)
-      label.translatesAutoresizingMaskIntoConstraints = false
       return label
    }()
    
@@ -36,7 +33,6 @@ class DetailViewController : UIViewController {
       let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout )
       collectionView.backgroundColor = .none
       collectionView.showsVerticalScrollIndicator = false
-      collectionView.translatesAutoresizingMaskIntoConstraints = false
       return collectionView
    }()
    
@@ -85,24 +81,21 @@ class DetailViewController : UIViewController {
    
    private func setConstraints() {
       
-      NSLayoutConstraint.activate([
-         personImageView.heightAnchor.constraint(equalToConstant: 200),
-         personImageView.widthAnchor.constraint(equalToConstant: 200),
-         personImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-         personImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20)
-      ])
-      
-      NSLayoutConstraint.activate([
-         episodesLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-         episodesLabel.topAnchor.constraint(equalTo: personImageView.bottomAnchor, constant: 20)
-      ])
-      
-      NSLayoutConstraint.activate([
-         collectionView.topAnchor.constraint(equalTo: episodesLabel.bottomAnchor, constant: 20),
-         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
-         collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-         collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
-      ])
+      personImageView.snp.makeConstraints { make in
+         make.width.height.equalTo(200)
+         make.centerX.equalToSuperview()
+         make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
+      }
+
+      episodesLabel.snp.makeConstraints { make in
+         make.centerX.equalToSuperview()
+         make.top.equalTo(personImageView.snp.bottom).inset(-20)
+      }
+
+      collectionView.snp.makeConstraints { make in
+         make.top.equalTo(episodesLabel.snp.bottom).inset(-20)
+         make.left.right.bottom.equalToSuperview().inset(40)
+      }
    }
 }
 
